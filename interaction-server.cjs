@@ -20,7 +20,7 @@ let state = { sent: false, confirmed: false, signals: {} };
 const runningProcesses = new Map();
 
 // --- Startup ---
-if (!fs.existsSync(PROCESSES_FILE) && fs.existsSync(BASE_PROCESSES_FILE)) {
+if (fs.existsSync(BASE_PROCESSES_FILE)) {
     fs.copyFileSync(BASE_PROCESSES_FILE, PROCESSES_FILE);
 }
 if (!fs.existsSync(path.join(__dirname, 'interaction-signals.json'))) {
