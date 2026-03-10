@@ -1,0 +1,16 @@
+[
+    {
+        "id": "AML_001",
+        "category": "AML Investigation",
+        "name": "PEP Alert — Viktor Kozlov (Russia/Cyprus)",
+        "stockId": "SAR-2026-0417",
+        "year": "2026-03-10",
+        "status": "Ready",
+        "currentStatus": "Ready for processing",
+        "fileName": "Pega Alert #ALT-88241",
+        "alertSource": "Pega AML",
+        "riskRating": "High",
+        "customerType": "Private Banking",
+        "jurisdiction": "Cyprus / Russia"
+    }
+]
