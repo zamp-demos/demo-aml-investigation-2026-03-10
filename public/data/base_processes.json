@@ -2,7 +2,7 @@
     {
         "id": "AML_001",
         "category": "AML Investigation",
-        "name": "PEP Alert — Viktor Kozlov (Russia/Cyprus)",
+        "name": "PEP Alert \u2014 Viktor Kozlov (Russia/Cyprus)",
         "stockId": "SAR-2026-0417",
         "year": "2026-03-10",
         "status": "Ready",
@@ -16,7 +16,7 @@
     {
         "id": "AML_002",
         "category": "AML Investigation",
-        "name": "Suspicious Wire — BorderLine Logistics LLC ($1.9M to Mexico)",
+        "name": "Suspicious Wire \u2014 BorderLine Logistics LLC ($1.9M to Mexico)",
         "stockId": "INV-2025-03-0412",
         "year": "2025-03-03",
         "status": "Ready",
@@ -26,5 +26,19 @@
         "riskRating": "High",
         "customerType": "Commercial",
         "jurisdiction": "USA / Mexico"
+    },
+    {
+        "id": "AML_003",
+        "category": "AML Investigation",
+        "name": "Export Control Risk \u2014 Hartwell Manufacturing Inc ($840K to Hong Kong)",
+        "stockId": "INV-2025-06-0298",
+        "year": "2025-06-09",
+        "status": "Ready",
+        "currentStatus": "Ready for processing",
+        "fileName": "Pega Alert #ALT-2025-06-0514",
+        "alertSource": "Pega AIM",
+        "riskRating": "High",
+        "customerType": "Commercial",
+        "jurisdiction": "USA / Hong Kong"
     }
 ]

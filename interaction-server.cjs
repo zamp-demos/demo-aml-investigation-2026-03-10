@@ -24,7 +24,7 @@ if (fs.existsSync(BASE_PROCESSES_FILE)) {
     fs.copyFileSync(BASE_PROCESSES_FILE, PROCESSES_FILE);
 }
 if (!fs.existsSync(path.join(__dirname, 'interaction-signals.json'))) {
-    fs.writeFileSync(path.join(__dirname, 'interaction-signals.json'), JSON.stringify({ APPROVE_ESCALATION: false, APPROVE_RFI_SEND: false }, null, 4));
+    fs.writeFileSync(path.join(__dirname, 'interaction-signals.json'), JSON.stringify({ APPROVE_ESCALATION: false, APPROVE_RFI_SEND: false, APPROVE_HARTWELL_ACTION: false }, null, 4));
 }
 if (!fs.existsSync(FEEDBACK_QUEUE_PATH)) fs.writeFileSync(FEEDBACK_QUEUE_PATH, '[]');
 if (!fs.existsSync(KB_VERSIONS_PATH)) fs.writeFileSync(KB_VERSIONS_PATH, '[]');
@@ -76,7 +76,7 @@ const server = http.createServer(async (req, res) => {
         console.log('Demo Reset Triggered');
 
         const signalFile = path.join(__dirname, 'interaction-signals.json');
-        fs.writeFileSync(signalFile, JSON.stringify({ APPROVE_ESCALATION: false, APPROVE_RFI_SEND: false }, null, 4));
+        fs.writeFileSync(signalFile, JSON.stringify({ APPROVE_ESCALATION: false, APPROVE_RFI_SEND: false, APPROVE_HARTWELL_ACTION: false }, null, 4));
 
         runningProcesses.forEach((proc, id) => {
             try { process.kill(-proc.pid, 'SIGKILL'); } catch (e) { }
@@ -109,6 +109,18 @@ const server = http.createServer(async (req, res) => {
                     riskRating: "High",
                     customerType: "Commercial",
                     jurisdiction: "USA / Mexico"
+                }, {
+                    id: "AML_003",
+                    name: "Export Control Risk — Hartwell Manufacturing Inc ($840K to Hong Kong)",
+                    category: "AML Investigation",
+                    stockId: "INV-2025-06-0298",
+                    year: new Date().toISOString().split('T')[0],
+                    status: "In Progress",
+                    currentStatus: "Initializing...",
+                    alertSource: "Pega AIM",
+                    riskRating: "High",
+                    customerType: "Commercial",
+                    jurisdiction: "USA / Hong Kong"
                 }];
                 fs.writeFileSync(PROCESSES_FILE, JSON.stringify(cases, null, 4));
                 fs.writeFileSync(FEEDBACK_QUEUE_PATH, '[]');
@@ -127,6 +139,13 @@ const server = http.createServer(async (req, res) => {
                     runningProcesses.delete('AML_002');
                 });
                 runningProcesses.set('AML_002', child2);
+
+                const scriptPath3 = path.join(__dirname, 'simulation_scripts', 'aml_story_3_needs_attention.cjs');
+                const child3 = exec(`node "${scriptPath3}" > "${scriptPath3}.log" 2>&1`, (error) => {
+                    if (error && error.code !== 0) console.error('Script error:', error.message);
+                    runningProcesses.delete('AML_003');
+                });
+                runningProcesses.set('AML_003', child3);
             }, 1000);
         });
 
