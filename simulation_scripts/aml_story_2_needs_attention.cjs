@@ -239,7 +239,12 @@ const waitForSignal = async (signalId) => {
                 "RFI framed as routine enhanced due diligence review triggered by increased transaction activity"
             ],
             artifacts: [
-                { id: "rfi-email", type: "email", label: "Sub: Routine Document Request — BorderLine Logistics LLC", pdfPath: "/data/rfi_borderline_logistics.pdf" }
+                { id: "rfi-email", type: "email_draft", label: "RFI Email Draft", data: {
+                    to: "compliance@borderlinelogistics.com",
+                    from: "aml-investigations@meridianbank.com",
+                    subject: "Routine Document Request — BorderLine Logistics LLC (Ref: RFI-2025-03-0341)",
+                    body: "Dear BorderLine Logistics LLC Compliance Team,\n\nAs part of our routine enhanced due diligence review triggered by increased transaction activity, we are requesting the following documentation:\n\n1. Warehouse lease agreement with Transportes del Norte SA de CV\n2. Board resolution approving Mexico expansion expenditure\n3. USPS contract excerpt confirming cross-border logistics scope\n4. Documentation explaining business relationship with Orion Realty Partners LLC\n5. Supporting documentation for 9 inbound wire transfers totaling $2.4M from Orion Realty Partners LLC\n\nPlease provide the requested documents by March 17, 2025 (10 business days).\n\nThis request is part of our standard compliance procedures and does not imply any negative finding.\n\nRegards,\nAML Investigations Unit\nMeridian Bank"
+                } }
             ],
             isHitl: true,
             signalName: "APPROVE_RFI_SEND"

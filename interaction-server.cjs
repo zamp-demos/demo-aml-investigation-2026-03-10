@@ -161,6 +161,18 @@ const server = http.createServer(async (req, res) => {
     if (cleanPath === '/email-status' && req.method === 'POST') {
         const parsed = await parseBody(req);
         state.sent = parsed.sent || false;
+        // Bridge: when email is sent, also trigger the APPROVE_RFI_SEND signal
+        // so the simulation script's waitForSignal() unblocks and steps 8-10 continue
+        if (parsed.sent) {
+            const signalFile = path.join(__dirname, 'interaction-signals.json');
+            let signals = {};
+            try { signals = JSON.parse(fs.readFileSync(signalFile, 'utf8')); } catch(e) {}
+            signals['APPROVE_RFI_SEND'] = true;
+            const tmpFile = signalFile + '.' + Math.random().toString(36).substring(7) + '.tmp';
+            fs.writeFileSync(tmpFile, JSON.stringify(signals, null, 4));
+            fs.renameSync(tmpFile, signalFile);
+            console.log('Email sent -> APPROVE_RFI_SEND signal triggered');
+        }
         res.writeHead(200, { ...corsHeaders, 'Content-Type': 'application/json' });
         return res.end(JSON.stringify({ status: 'ok' }));
     }
