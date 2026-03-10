@@ -263,7 +263,13 @@ const waitForSignal = async (signalId) => {
                 "Orion Realty's payments are for a legitimate logistics-real estate services arrangement"
             ],
             artifacts: [
-                { id: "rfi-response-email", type: "email", label: "RE: Routine Document Request — BorderLine Logistics LLC", pdfPath: "/data/rfi_response_borderline.pdf" },
+                { id: "rfi-response-email", type: "email_draft", label: "RE: Routine Document Request — BorderLine Logistics LLC", data: {
+                    isIncoming: true,
+                    to: "aml-investigations@meridianbank.com",
+                    from: "m.chen@borderlinelogistics.com",
+                    subject: "RE: Routine Document Request — BorderLine Logistics LLC (Ref: RFI-2025-03-0341)",
+                    body: "Dear AML Investigations Unit,\n\nThank you for your inquiry. Please find attached all requested documentation:\n\n1. Warehouse Lease Agreement — 5-year lease for 40,000 sq ft facility in Monterrey with Transportes del Norte SA de CV. Upfront payment of $1.52M covers security deposit and 12 months prepaid rent.\n\n2. Board Resolution (January 2025) — Authorizes up to $2.5M in capital expenditure for Mexico cross-border operations expansion.\n\n3. USPS Contract Excerpt — Confirms bonded warehousing requirement within 50 miles of Laredo border crossing for our USPS last-mile contract.\n\n4. Orion Realty Partners Relationship — BorderLine subleases three warehouse properties in the Dallas-Fort Worth area from Orion Realty Partners LLC. We also provide last-mile delivery services for Orion’s commercial tenants. Sublease agreements for all three properties are attached. Monthly rents and service fees total approximately $265,000/month.\n\n5. Fleet Staging Invoice — $380,000 invoice from Transportes del Norte for fleet staging and cross-dock setup at the Monterrey facility.\n\nPlease let us know if you require any additional documentation.\n\nBest regards,\nMichael Chen\nChief Financial Officer\nBorderLine Logistics LLC"
+                } },
                 { id: "warehouse-lease", type: "file", label: "Warehouse_Lease_Monterrey.pdf", pdfPath: "/data/warehouse_lease_monterrey.pdf" },
                 { id: "board-resolution", type: "file", label: "Board_Resolution_Jan2025.pdf", pdfPath: "/data/board_resolution_jan2025.pdf" },
                 { id: "usps-contract", type: "file", label: "USPS_Contract_Excerpt.pdf", pdfPath: "/data/usps_contract_excerpt.pdf" },
