@@ -12,5 +12,19 @@
         "riskRating": "High",
         "customerType": "Private Banking",
         "jurisdiction": "Cyprus / Russia"
+    },
+    {
+        "id": "AML_002",
+        "category": "AML Investigation",
+        "name": "Suspicious Wire — BorderLine Logistics LLC ($1.9M to Mexico)",
+        "stockId": "INV-2025-03-0412",
+        "year": "2025-03-03",
+        "status": "Ready",
+        "currentStatus": "Ready for processing",
+        "fileName": "Pega Alert #ALT-2025-03-0871",
+        "alertSource": "Pega AIM",
+        "riskRating": "High",
+        "customerType": "Commercial",
+        "jurisdiction": "USA / Mexico"
     }
 ]

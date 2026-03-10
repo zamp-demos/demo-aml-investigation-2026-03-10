@@ -24,7 +24,7 @@ if (!fs.existsSync(PROCESSES_FILE) && fs.existsSync(BASE_PROCESSES_FILE)) {
     fs.copyFileSync(BASE_PROCESSES_FILE, PROCESSES_FILE);
 }
 if (!fs.existsSync(path.join(__dirname, 'interaction-signals.json'))) {
-    fs.writeFileSync(path.join(__dirname, 'interaction-signals.json'), JSON.stringify({ APPROVE_ESCALATION: false }, null, 4));
+    fs.writeFileSync(path.join(__dirname, 'interaction-signals.json'), JSON.stringify({ APPROVE_ESCALATION: false, APPROVE_RFI_SEND: false }, null, 4));
 }
 if (!fs.existsSync(FEEDBACK_QUEUE_PATH)) fs.writeFileSync(FEEDBACK_QUEUE_PATH, '[]');
 if (!fs.existsSync(KB_VERSIONS_PATH)) fs.writeFileSync(KB_VERSIONS_PATH, '[]');
@@ -76,7 +76,7 @@ const server = http.createServer(async (req, res) => {
         console.log('Demo Reset Triggered');
 
         const signalFile = path.join(__dirname, 'interaction-signals.json');
-        fs.writeFileSync(signalFile, JSON.stringify({ APPROVE_ESCALATION: false }, null, 4));
+        fs.writeFileSync(signalFile, JSON.stringify({ APPROVE_ESCALATION: false, APPROVE_RFI_SEND: false }, null, 4));
 
         runningProcesses.forEach((proc, id) => {
             try { process.kill(-proc.pid, 'SIGKILL'); } catch (e) { }
@@ -97,17 +97,36 @@ const server = http.createServer(async (req, res) => {
                     riskRating: "High",
                     customerType: "Private Banking",
                     jurisdiction: "Cyprus / Russia"
+                }, {
+                    id: "AML_002",
+                    name: "Suspicious Wire — BorderLine Logistics LLC ($1.9M to Mexico)",
+                    category: "AML Investigation",
+                    stockId: "INV-2025-03-0412",
+                    year: new Date().toISOString().split('T')[0],
+                    status: "In Progress",
+                    currentStatus: "Initializing...",
+                    alertSource: "Pega AIM",
+                    riskRating: "High",
+                    customerType: "Commercial",
+                    jurisdiction: "USA / Mexico"
                 }];
                 fs.writeFileSync(PROCESSES_FILE, JSON.stringify(cases, null, 4));
                 fs.writeFileSync(FEEDBACK_QUEUE_PATH, '[]');
                 fs.writeFileSync(KB_VERSIONS_PATH, '[]');
 
-                const scriptPath = path.join(__dirname, 'simulation_scripts', 'aml_story_1_needs_attention.cjs');
-                const child = exec(`node "${scriptPath}" > "${scriptPath}.log" 2>&1`, (error) => {
+                const scriptPath1 = path.join(__dirname, 'simulation_scripts', 'aml_story_1_needs_attention.cjs');
+                const child1 = exec(`node "${scriptPath1}" > "${scriptPath1}.log" 2>&1`, (error) => {
                     if (error && error.code !== 0) console.error('Script error:', error.message);
                     runningProcesses.delete('AML_001');
                 });
-                runningProcesses.set('AML_001', child);
+                runningProcesses.set('AML_001', child1);
+
+                const scriptPath2 = path.join(__dirname, 'simulation_scripts', 'aml_story_2_needs_attention.cjs');
+                const child2 = exec(`node "${scriptPath2}" > "${scriptPath2}.log" 2>&1`, (error) => {
+                    if (error && error.code !== 0) console.error('Script error:', error.message);
+                    runningProcesses.delete('AML_002');
+                });
+                runningProcesses.set('AML_002', child2);
             }, 1000);
         });
 
